@@ -5,6 +5,7 @@ export const repos = Router();
 
 repos.get('/', async (_: Request, res: Response) => {
   res.header('Cache-Control', 'no-store');
+  // TODO: See README.md Task (A). Return repo data here. You’ve got this!
   axios
     .get('https://api.github.com/users/silverorange/repos')
     .then((data: any) => {
@@ -19,10 +20,7 @@ repos.get('/', async (_: Request, res: Response) => {
           response.push(arr);
         }
       }
-      res.send(response);
+      res.status(200).send(response);
     })
     .catch((err: any) => res.json(err));
-  //res.status(200);
-
-  // TODO: See README.md Task (A). Return repo data here. You’ve got this!
 });
