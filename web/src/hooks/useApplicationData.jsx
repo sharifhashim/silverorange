@@ -3,15 +3,20 @@ import axios from '../api/axios';
 
 export default function useApplicationData(initial) {
   const [state, setState] = useState([]);
-
+  const [stateCopy, setStateCopy] = useState([]);
   useEffect(() => {
     axios
       .get('/repos')
       .then((details) => {
-        console.log(details);
-        setState(details.data);
+        const sorted = details.data
+          .sort((a, b) => {
+            return new Date(a.created_at) - new Date(b.created_at);
+          })
+          .reverse();
+        setState(sorted);
+        setStateCopy(sorted);
       })
       .catch((err) => console.log(err));
   }, []);
-  return { state };
+  return { state, setState, stateCopy, setStateCopy };
 }
