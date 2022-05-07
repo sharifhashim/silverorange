@@ -10,6 +10,12 @@ import useApplicationData from '../hooks/useApplicationData';
 
 export default function TableList() {
   const { state } = useApplicationData();
+  const sorted = state
+    .sort((a, b) => {
+      return new Date(a.created_at) - new Date(b.created_at);
+    })
+    .reverse();
+
   return (
     <TableContainer component={Paper}>
       <Table sx={{ minWidth: 650 }} aria-label="simple table">
@@ -22,7 +28,7 @@ export default function TableList() {
           </TableRow>
         </TableHead>
         <TableBody>
-          {state.map((row) => (
+          {sorted.map((row) => (
             <TableRow
               key={row.id}
               sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
